@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.gmpatter</groupId>
+  <artifactId>url-shortener</artifactId>
+  <version>1.0</version>
+
+  <properties>
+    <maven.compiler.release>17</maven.compiler.release>
+    <maven.compiler.target>17.0</maven.compiler.target>
+    <maven.compiler.source>17.0</maven.compiler.source>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <mainClass>com.gmpatter.shorty.ServerMain</mainClass>
+
+    <version.slf4j.api>1.7.36</version.slf4j.api>
+    <version.log4j>2.18.0</version.log4j>
+    <version.jackson>2.13.3</version.jackson>
+    <version.helidon>2.5.2</version.helidon>
+    <version.jersey>2.35</version.jersey>
+    <version.junit>5.9.0</version.junit>
+    <version.mockito>4.4.0</version.mockito>
+
+    <!-- plugin versions -->
+    <version.surefire.plugin>3.0.0-M5</version.surefire.plugin>
+    <version.failsafe.plugin>3.0.0-M5</version.failsafe.plugin>
+    <version.compiler.plugin>3.10.1</version.compiler.plugin>
+    <version.dependency.plugin>3.3.0</version.dependency.plugin>
+    <version.jar.plugin>3.2.2</version.jar.plugin>
+    <version.spotbugs.plugin>4.6.0.0</version.spotbugs.plugin>
+  </properties>
+
+  <dependencies>
+    <!-- Start logging dependencies for SLF4J with Log4J and Helidon -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${version.slf4j.api}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.helidon.logging</groupId>
+      <artifactId>helidon-logging-slf4j</artifactId>
+      <version>${version.helidon}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.helidon.logging</groupId>
+      <artifactId>helidon-logging-log4j</artifactId>
+      <version>${version.helidon}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-api</artifactId>
+      <version>${version.log4j}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>${version.log4j}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-jul</artifactId>
+      <version>${version.log4j}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-slf4j-impl</artifactId>
+      <version>${version.log4j}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.dataformat</groupId>
+      <artifactId>jackson-dataformat-yaml</artifactId>
+      <version>${version.jackson}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${version.jackson}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <!-- End logging dependencies -->
+
+    <!-- Start Helidon dependencies -->
+    <dependency>
+      <groupId>io.helidon.webserver</groupId>
+      <artifactId>helidon-webserver</artifactId>
+      <version>${version.helidon}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.helidon.webserver</groupId>
+      <artifactId>helidon-webserver-jersey</artifactId>
+      <version>${version.helidon}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.helidon.config</groupId>
+      <artifactId>helidon-config-yaml</artifactId>
+      <version>${version.helidon}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.helidon.media</groupId>
+      <artifactId>helidon-media-jsonp</artifactId>
+      <version>${version.helidon}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.helidon.webserver</groupId>
+      <artifactId>helidon-webserver-static-content</artifactId>
+      <version>${version.helidon}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.helidon.openapi</groupId>
+      <artifactId>helidon-openapi</artifactId>
+      <version>${version.helidon}</version>
+    </dependency>
+    <!-- End Helidon dependencies -->
+
+
+    <dependency>
+      <groupId>org.glassfish.jersey.media</groupId>
+      <artifactId>jersey-media-json-binding</artifactId>
+      <version>${version.jersey}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.media</groupId>
+      <artifactId>jersey-media-json-jackson</artifactId>
+      <scope>runtime</scope>
+      <version>${version.jersey}</version>
+    </dependency>
+
+    <!-- Test dependencies -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${version.junit}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>${version.mockito}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <!-- Surefire plugin for running unit tests.  -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${version.surefire.plugin}</version>
+      </plugin>
+      <!-- Failsafe plugin used for running integration tests. -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>${version.failsafe.plugin}</version>
+      </plugin>
+      <!-- Compiler plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${version.compiler.plugin}</version>
+      </plugin>
+      <!-- Dependency plugin for managing dependencies and copying
+           dependencies to libs directory as part of application packaging -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>${version.dependency.plugin}</version>
+        <executions>
+          <!-- Copy dependencies under libs -->
+          <execution>
+            <id>copy-libs</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/libs</outputDirectory>
+              <overWriteReleases>false</overWriteReleases>
+              <overWriteSnapshots>false</overWriteSnapshots>
+              <overWriteIfNewer>true</overWriteIfNewer>
+              <overWriteIfNewer>true</overWriteIfNewer>
+              <includeScope>runtime</includeScope>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- Jar plugin to create an executable jar -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>${version.jar.plugin}</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <classpathPrefix>libs/</classpathPrefix>
+              <useUniqueVersions>false</useUniqueVersions>
+              <mainClass>${mainClass}</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+      <!-- Spotbugs plugin for static analysis checks -->
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <version>${version.spotbugs.plugin}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

@@ -1,0 +1,87 @@
+openapi: 3.0.0
+info:
+  title: Shorty API
+  description: API for URL Shortening application
+  version: 1.0
+servers:
+  - url: http://localhost:8080
+    description: Dev server running on localhost
+paths:
+  /url/{token}:
+    get:
+      summary: Returns a url for the given token
+      responses:
+        '200':
+          description: A JSON object representing the url
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  type: string
+        '400':
+          description: Error response when token is missing or empty
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  type: string
+        '404':
+          description: Error response when url is not found for the given token
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  type: string
+    delete:
+      summary: Delete a url for the given token
+      responses:
+        '204':
+          description: Successfully deleted the url for the given token
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  type: string
+        '404':
+          description: Error response when url is not found for the given token
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  type: string
+  /url/:
+    post:
+      summary: Creates a new short url
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                expiryCode:
+                  type: string
+      responses:
+        '201':
+          description: Creates a new short url and returns its JSON representation.
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  type: string
+        '400':
+          description: Error response when required request body fields are missing or empty
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  type: string

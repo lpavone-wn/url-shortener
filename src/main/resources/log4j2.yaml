@@ -1,0 +1,20 @@
+Configuration:
+  status: warn
+
+  Properties:
+    Property:
+      name: default_pattern
+      value: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+  Appenders:
+    Console:
+      name: Console
+      PatternLayout:
+        Pattern: ${env:LOGGING_PATTERN:-${default_pattern}}
+  Loggers:
+    logger:
+      - name: com.gmpatter.shorty
+        level: debug
+    Root:
+      level: info
+      AppenderRef:
+        - ref: Console
