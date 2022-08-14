@@ -31,7 +31,8 @@ everywhere, and to provide a context to use for the REST api.
 
 ### Helidon Web Server
 The application runs on Helidon SE Web server using JAXRS to implement the 
-REST API, and using Helidon's static content support to server the UI.
+REST API, and using Helidon's static content support to serve the UI.
+
 Helidon is a lightweight web server that runs of Netty, see https://helidon.io.
 
 ### REST API
@@ -84,7 +85,7 @@ JAXRS is used to implement the REST API. Endpoints can be found in **UrlEndpoint
 #### ServerMain
 The main class configures and starts the Helidon Web Server. Helidon's built-in 
 routing support is used to redirect shortened url requests in ServerMain. The 
-static content routing and JAXRS application are also registered with the Web 
+static content routing, OpenAPI support and JAXRS application are also registered with the Web 
 Server in ServerMain.
 
 #### URLService
@@ -93,13 +94,13 @@ contains the logic for generating the tokens for the URL's, and calculating
 expiry dates.
 
 URLService is a singleton, as we only need a single instance of the class for 
-the application. Alternatively may have use dependency injection for "Inversion 
+the application. Alternatively may have used dependency injection for "Inversion 
 of Control" pattern, but since @Autowired was ruled out in the guidelines, 
-injection seen to similar. So using Singletons rather than @ApplicationScoped 
-CDI beans.
+injection seemed to similar. So using Singletons rather than something like
+@ApplicationScoped CDI beans.
 
 URLService handles cleanup of expired URL's using a scheduled thread executor 
-to run periodically and purge any expired tokens.
+that runs periodically to purge any expired tokens.
 
 #### URLRepository
 The URLRepository is used to persist short URL's, with operations to create, 
@@ -107,7 +108,8 @@ get, and delete URL's, as well as purge expired URL's.
 
 ##### MapUrlRepository
 The MapUrlRepository is the currently the sole implementation of UrlRepository.
-It stores the url data in-memory in a ConcurrentHashMap.
+It stores the url data in-memory in a ConcurrentHashMap. Avoided adding dependency 
+on a database to avoid any potential complications for the reviewers.
 
 ### Future Enhancements
 - Replace MapUrlRepository with an implementation backed by a database for 
