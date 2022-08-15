@@ -3,33 +3,38 @@
     <head>
         <title>Shorty - Url Shortener</title>
         <meta charset="UTF-8">
+        <link rel="stylesheet" href="layout/styles.css">
         <script src="js/controller.js"></script>
     </head>
     <body>
 
-    <div id="title">
-        <h1> Shorty - URL Shortener</h1>
-    </div>
+    <div id="page">
 
-    <div id="createUrlForm">
-        <form name="createShortUrlForm" onsubmit="return submitForm()">
-            <label id="prompt">Enter the URL:</label>
-            <input type="text" id="urlInput" name="url">
-            <p id="urlValidationMessage" class="validationMessage"></p>
-            <label id="expiry">Expiry: </label>
-            <select id="expirySelect" name="expiryCode">
-                <option value="0">1 Minute</option>
-                <option value="1">1 Hour</option>
-                <option value="2">1 Day</option>
-                <option value="3">1 Year</option>
-            </select>
-            <input type="submit" id="formSubmit" value="Submit">
-        </form>
-    </div>
+        <div id="title">
+            <h1>Shorty</h1>
+            <h3>A URL Shortener for more efficient links. Enter a URL to get started.</h3>
+        </div>
 
-    <div id="response">
-        <p id="results" hidden="true">Shorty URL - <a id="shortUrlLink" href=""></a></p>
-        <p id="expiryMessage"></p>
+        <div id="createUrlForm">
+            <form name="createShortUrlForm" onsubmit="return submitForm()">
+                <label id="prompt">URL:</label>
+                <input type="text" id="urlInput" name="url">
+                <p id="urlValidationMessage" class="validationMessage"></p>
+                <label id="expiry">Expiry: </label>
+                <select id="expirySelect" name="expiryCode">
+                    <option value="0">1 Minute</option>
+                    <option value="1">1 Hour</option>
+                    <option value="2">1 Day</option>
+                    <option value="3">1 Year</option>
+                </select>
+                <input type="submit" id="formSubmit" value="Submit">
+            </form>
+        </div>
+
+        <div id="response" hidden="true">
+            <p id="results" hidden="true">Shorty URL - <a id="shortUrlLink" href=""></a></p>
+            <p id="expiryMessage"></p>
+        </div>
     </div>
 
     </body>

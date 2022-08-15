@@ -1,0 +1,21 @@
+#page {
+  text-align: center;
+}
+
+#urlValidationMessage {
+  font-size: 11pt;
+  color: red;
+}
+
+#expiryMessage {
+  font-size: 11pt;
+  font-style: italic;
+}
+
+#response {
+  border: 2px solid black;
+}
+
+#createUrlForm {
+  padding-bottom:10px;
+}
