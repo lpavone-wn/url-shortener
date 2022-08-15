@@ -3,6 +3,7 @@ package com.gmpatter.shorty.service;
 import com.gmpatter.shorty.model.ShortUrl;
 import com.gmpatter.shorty.persistence.MapUrlRepository;
 import com.gmpatter.shorty.persistence.UrlRepository;
+import io.helidon.config.Config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +11,8 @@ import java.time.LocalDateTime;
 import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
+import static io.helidon.config.ConfigSources.classpath;
 
 /**
  * The controller class for managing URLs.
@@ -27,11 +30,20 @@ public class UrlService {
   protected static final Logger LOGGER = LoggerFactory.getLogger(UrlService.class);
 
   // All the available characters for generating tokens
-  private static final char[] TOKEN_CHARACTERS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
+  private char[] tokenCharacters;
+  private int tokenLength;
 
   private static UrlService INSTANCE;
 
   private UrlService() {
+    // Get any configuration for token generation
+    Config config = Config.builder()
+        .sources(classpath("application.yaml"))
+        .build();
+    Config tokenConfig = config.get("shorty.token");
+    tokenLength = tokenConfig.get("token-length").asInt().orElse(7);
+    tokenCharacters = tokenConfig.get("token-characters").toString().toCharArray();
+
     // Start a scheduler that will periodically cleanup expired urls
     Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(() -> expiredUrlCleanup(), 1, 1, TimeUnit.MINUTES);
   }
@@ -164,10 +176,10 @@ public class UrlService {
    */
   protected String generateToken() {
     StringBuffer sb = new StringBuffer();
-    for (int i=0; i<7; i++) {
+    for (int i=0; i<tokenLength; i++) {
       // Add random numbers from the token character array
-      int random = new Random().nextInt(TOKEN_CHARACTERS.length);
-      sb.append(TOKEN_CHARACTERS[random]);
+      int random = new Random().nextInt(tokenCharacters.length);
+      sb.append(tokenCharacters[random]);
     }
     return sb.toString();
   }

@@ -1,3 +1,7 @@
 server:
   port: 8080
   bind-address: 0.0.0.0
+shorty:
+  token:
+    token-length: 7
+    token-characters: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
