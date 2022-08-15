@@ -125,6 +125,7 @@ method of avoiding clashes by generating the token again if a token already
 exists in the repository.
 - A cache for frequently accessed URL's could be introduced to boost performance, 
 with UrlService first reading from the cache before checking the UrlRepository.
+- URL Sanitization
 - Improve the UI.
 
 ## Testing
