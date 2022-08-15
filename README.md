@@ -102,6 +102,11 @@ injection seemed to similar. So using Singletons rather than something like
 URLService handles cleanup of expired URL's using a scheduled thread executor 
 that runs periodically to purge any expired tokens.
 
+##### Config Properties
+**shorty.token.token-length** - The length of the url token. Defaults to 7.
+
+**shorty.token.token-characters** - The characters that can be used in the generated token.
+
 #### URLRepository
 The URLRepository is used to persist short URL's, with operations to create, 
 get, and delete URL's, as well as purge expired URL's.
@@ -118,6 +123,8 @@ persistent storage.
 as part of the token generation to avoid conflicts, and remove the inefficient 
 method of avoiding clashes by generating the token again if a token already 
 exists in the repository.
+- A cache for frequently accessed URL's could be introduced to boost performance, 
+with UrlService first reading from the cache before checking the UrlRepository.
 - Improve the UI.
 
 ## Testing
