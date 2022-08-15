@@ -19,7 +19,7 @@ mvn package
 The application is built by Maven as an executable jar file that can be run 
 locally. To run the application, run:
 ```
-java -jar target/url-shortener.jar
+java -jar target/url-shortener-1.0.jar
 ```
 
 ### Web App
